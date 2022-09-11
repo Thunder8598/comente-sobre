@@ -1,9 +1,16 @@
 import React from "react";
+import Navbar from "../../components/navbar/Navbar";
+import FormTopico from "./components/FormTopico";
+import Listagem from "./components/Listagem";
 
-class Home extends React.Component{
+class Home extends React.Component {
     render(): React.ReactNode {
-        return(
-            <h1>jkhsdkhs</h1>
+        return (
+            <main id="home">
+                <Navbar />
+                <FormTopico />
+                <Listagem />
+            </main>
         );
     }
 }

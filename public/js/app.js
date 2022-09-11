@@ -5302,6 +5302,87 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./resources/js/components/navbar/Navbar.tsx":
+/*!***************************************************!*\
+  !*** ./resources/js/components/navbar/Navbar.tsx ***!
+  \***************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __extends = this && this.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var Navbar = function (_super) {
+  __extends(Navbar, _super);
+
+  function Navbar() {
+    return _super !== null && _super.apply(this, arguments) || this;
+  }
+
+  Navbar.prototype.render = function () {
+    return react_1["default"].createElement("nav", {
+      className: "navbar navbar-light bg-light justify-content-between shadow"
+    }, react_1["default"].createElement("a", {
+      className: "navbar-brand"
+    }, "Navbar"), react_1["default"].createElement("form", {
+      className: "d-flex"
+    }, react_1["default"].createElement("input", {
+      className: "form-control mr-sm-2",
+      type: "search",
+      placeholder: "Busca",
+      "aria-label": "Busca"
+    }), react_1["default"].createElement("button", {
+      className: "btn btn-outline-success my-2 my-sm-0",
+      type: "submit"
+    }, "Busca")));
+  };
+
+  return Navbar;
+}(react_1["default"].Component);
+
+exports["default"] = Navbar;
+
+/***/ }),
+
 /***/ "./resources/js/views/Routes.tsx":
 /*!***************************************!*\
   !*** ./resources/js/views/Routes.tsx ***!
@@ -5426,6 +5507,12 @@ Object.defineProperty(exports, "__esModule", ({
 
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
+var Navbar_1 = __importDefault(__webpack_require__(/*! ../../components/navbar/Navbar */ "./resources/js/components/navbar/Navbar.tsx"));
+
+var FormTopico_1 = __importDefault(__webpack_require__(/*! ./components/FormTopico */ "./resources/js/views/home/components/FormTopico.tsx"));
+
+var Listagem_1 = __importDefault(__webpack_require__(/*! ./components/Listagem */ "./resources/js/views/home/components/Listagem.tsx"));
+
 var Home = function (_super) {
   __extends(Home, _super);
 
@@ -5434,13 +5521,188 @@ var Home = function (_super) {
   }
 
   Home.prototype.render = function () {
-    return react_1["default"].createElement("h1", null, "jkhsdkhs");
+    return react_1["default"].createElement("main", {
+      id: "home"
+    }, react_1["default"].createElement(Navbar_1["default"], null), react_1["default"].createElement(FormTopico_1["default"], null), react_1["default"].createElement(Listagem_1["default"], null));
   };
 
   return Home;
 }(react_1["default"].Component);
 
 exports["default"] = Home;
+
+/***/ }),
+
+/***/ "./resources/js/views/home/components/FormTopico.tsx":
+/*!***********************************************************!*\
+  !*** ./resources/js/views/home/components/FormTopico.tsx ***!
+  \***********************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __extends = this && this.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var FormTopico = function (_super) {
+  __extends(FormTopico, _super);
+
+  function FormTopico() {
+    return _super !== null && _super.apply(this, arguments) || this;
+  }
+
+  FormTopico.prototype.render = function () {
+    return react_1["default"].createElement("section", {
+      className: "form-topico"
+    }, react_1["default"].createElement("form", {
+      className: "d-flex justify-content-between"
+    }, react_1["default"].createElement("div", {
+      className: "form-group"
+    }, react_1["default"].createElement("input", {
+      type: "text",
+      name: "topico",
+      className: "form-control",
+      id: "txt-topico",
+      placeholder: "Crie um novo t\xF3pico"
+    })), react_1["default"].createElement("button", {
+      type: "submit",
+      className: "btn btn-primary"
+    }, "Criar")));
+  };
+
+  return FormTopico;
+}(react_1["default"].Component);
+
+exports["default"] = FormTopico;
+
+/***/ }),
+
+/***/ "./resources/js/views/home/components/Listagem.tsx":
+/*!*********************************************************!*\
+  !*** ./resources/js/views/home/components/Listagem.tsx ***!
+  \*********************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __extends = this && this.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var Listagem = function (_super) {
+  __extends(Listagem, _super);
+
+  function Listagem() {
+    return _super !== null && _super.apply(this, arguments) || this;
+  }
+
+  Listagem.prototype.render = function () {
+    return react_1["default"].createElement("section", {
+      className: "listagem"
+    }, react_1["default"].createElement("div", {
+      className: "card"
+    }, react_1["default"].createElement("a", {
+      href: ""
+    }, react_1["default"].createElement("div", {
+      className: "card-body"
+    }, react_1["default"].createElement("h5", {
+      className: "card-title"
+    }, "T\xF3pico"), react_1["default"].createElement("p", {
+      className: "card-text"
+    }, "\xDAltimo post: 11/09/2022")))), react_1["default"].createElement("div", {
+      className: "card"
+    }, react_1["default"].createElement("a", {
+      href: ""
+    }, react_1["default"].createElement("div", {
+      className: "card-body"
+    }, react_1["default"].createElement("h5", {
+      className: "card-title"
+    }, "T\xF3pico"), react_1["default"].createElement("p", {
+      className: "card-text"
+    }, "\xDAltimo post: 11/09/2022")))), react_1["default"].createElement("button", {
+      className: "btn btn-outline-primary"
+    }, "Ver mais"));
+  };
+
+  return Listagem;
+}(react_1["default"].Component);
+
+exports["default"] = Listagem;
 
 /***/ }),
 
