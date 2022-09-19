@@ -5436,6 +5436,8 @@ var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_mod
 
 var Home_1 = __importDefault(__webpack_require__(/*! ./home/Home */ "./resources/js/views/home/Home.tsx"));
 
+var Topic_1 = __importDefault(__webpack_require__(/*! ./topic/Topic */ "./resources/js/views/topic/Topic.tsx"));
+
 var Routes = function (_super) {
   __extends(Routes, _super);
 
@@ -5448,6 +5450,10 @@ var Routes = function (_super) {
       exact: true,
       path: "/",
       component: Home_1["default"]
+    }), react_1["default"].createElement(react_router_dom_1.Route, {
+      exact: true,
+      path: "/topic/:permalink",
+      component: Topic_1["default"]
     }));
   };
 
@@ -5732,6 +5738,245 @@ var react_dom_1 = __importDefault(__webpack_require__(/*! react-dom */ "./node_m
 var Routes_1 = __importDefault(__webpack_require__(/*! ./Routes */ "./resources/js/views/Routes.tsx"));
 
 react_dom_1["default"].render(react_1["default"].createElement(Routes_1["default"], null), document.getElementById("root"));
+
+/***/ }),
+
+/***/ "./resources/js/views/topic/Topic.tsx":
+/*!********************************************!*\
+  !*** ./resources/js/views/topic/Topic.tsx ***!
+  \********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __extends = this && this.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var Navbar_1 = __importDefault(__webpack_require__(/*! ../../components/navbar/Navbar */ "./resources/js/components/navbar/Navbar.tsx"));
+
+var FormComment_1 = __importDefault(__webpack_require__(/*! ./components/FormComment */ "./resources/js/views/topic/components/FormComment.tsx"));
+
+var List_1 = __importDefault(__webpack_require__(/*! ./components/List */ "./resources/js/views/topic/components/List.tsx"));
+
+var Topic = function (_super) {
+  __extends(Topic, _super);
+
+  function Topic() {
+    return _super !== null && _super.apply(this, arguments) || this;
+  }
+
+  Topic.prototype.render = function () {
+    return react_1["default"].createElement("main", {
+      id: "topic"
+    }, react_1["default"].createElement(Navbar_1["default"], null), react_1["default"].createElement(FormComment_1["default"], null), react_1["default"].createElement(List_1["default"], null));
+  };
+
+  return Topic;
+}(react_1["default"].Component);
+
+exports["default"] = Topic;
+
+/***/ }),
+
+/***/ "./resources/js/views/topic/components/FormComment.tsx":
+/*!*************************************************************!*\
+  !*** ./resources/js/views/topic/components/FormComment.tsx ***!
+  \*************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __extends = this && this.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var FormComment = function (_super) {
+  __extends(FormComment, _super);
+
+  function FormComment() {
+    return _super !== null && _super.apply(this, arguments) || this;
+  }
+
+  FormComment.prototype.render = function () {
+    return react_1["default"].createElement("section", {
+      className: "form-comment"
+    }, react_1["default"].createElement("form", {
+      className: "d-flex justify-content-between"
+    }, react_1["default"].createElement("div", {
+      className: "form-group"
+    }, react_1["default"].createElement("input", {
+      type: "text",
+      name: "comment",
+      className: "form-control",
+      placeholder: "Coment\xE1rio"
+    })), react_1["default"].createElement("button", {
+      type: "submit",
+      className: "btn btn-primary"
+    }, "Comentar")));
+  };
+
+  return FormComment;
+}(react_1["default"].Component);
+
+exports["default"] = FormComment;
+
+/***/ }),
+
+/***/ "./resources/js/views/topic/components/List.tsx":
+/*!******************************************************!*\
+  !*** ./resources/js/views/topic/components/List.tsx ***!
+  \******************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __extends = this && this.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var List = function (_super) {
+  __extends(List, _super);
+
+  function List() {
+    return _super !== null && _super.apply(this, arguments) || this;
+  }
+
+  List.prototype.render = function () {
+    return react_1["default"].createElement("section", {
+      className: "list"
+    }, react_1["default"].createElement("div", {
+      className: "card"
+    }, react_1["default"].createElement("div", {
+      className: "card-body"
+    }, react_1["default"].createElement("small", null, "teste@teste.com.br"), react_1["default"].createElement("p", {
+      className: "card-text"
+    }, "\xDAltimo post: 11/09/2022"))), react_1["default"].createElement("div", {
+      className: "card"
+    }, react_1["default"].createElement("div", {
+      className: "card-body"
+    }, react_1["default"].createElement("small", null, "teste@teste.com.br"), react_1["default"].createElement("p", {
+      className: "card-text"
+    }, "\xDAltimo post: 11/09/2022"))), react_1["default"].createElement("button", {
+      className: "btn btn-outline-primary"
+    }, "Ver mais"));
+  };
+
+  return List;
+}(react_1["default"].Component);
+
+exports["default"] = List;
 
 /***/ }),
 

@@ -20,3 +20,19 @@
   max-width: 760px;
   margin: auto;
 }
+
+.form-comment {
+  max-width: 760px;
+  margin: auto;
+}
+.form-comment form {
+  padding: 40px;
+}
+.form-comment form .form-group {
+  width: 86%;
+}
+
+.list {
+  max-width: 760px;
+  margin: auto;
+}
