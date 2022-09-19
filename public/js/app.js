@@ -5515,9 +5515,9 @@ var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/r
 
 var Navbar_1 = __importDefault(__webpack_require__(/*! ../../components/navbar/Navbar */ "./resources/js/components/navbar/Navbar.tsx"));
 
-var FormTopico_1 = __importDefault(__webpack_require__(/*! ./components/FormTopico */ "./resources/js/views/home/components/FormTopico.tsx"));
+var FormTopic_1 = __importDefault(__webpack_require__(/*! ./components/FormTopic */ "./resources/js/views/home/components/FormTopic.tsx"));
 
-var Listagem_1 = __importDefault(__webpack_require__(/*! ./components/Listagem */ "./resources/js/views/home/components/Listagem.tsx"));
+var List_1 = __importDefault(__webpack_require__(/*! ./components/List */ "./resources/js/views/home/components/List.tsx"));
 
 var Home = function (_super) {
   __extends(Home, _super);
@@ -5529,7 +5529,7 @@ var Home = function (_super) {
   Home.prototype.render = function () {
     return react_1["default"].createElement("main", {
       id: "home"
-    }, react_1["default"].createElement(Navbar_1["default"], null), react_1["default"].createElement(FormTopico_1["default"], null), react_1["default"].createElement(Listagem_1["default"], null));
+    }, react_1["default"].createElement(Navbar_1["default"], null), react_1["default"].createElement(FormTopic_1["default"], null), react_1["default"].createElement(List_1["default"], null));
   };
 
   return Home;
@@ -5539,10 +5539,10 @@ exports["default"] = Home;
 
 /***/ }),
 
-/***/ "./resources/js/views/home/components/FormTopico.tsx":
-/*!***********************************************************!*\
-  !*** ./resources/js/views/home/components/FormTopico.tsx ***!
-  \***********************************************************/
+/***/ "./resources/js/views/home/components/FormTopic.tsx":
+/*!**********************************************************!*\
+  !*** ./resources/js/views/home/components/FormTopic.tsx ***!
+  \**********************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -5597,7 +5597,7 @@ var FormTopico = function (_super) {
 
   FormTopico.prototype.render = function () {
     return react_1["default"].createElement("section", {
-      className: "form-topico"
+      className: "form-topic"
     }, react_1["default"].createElement("form", {
       className: "d-flex justify-content-between"
     }, react_1["default"].createElement("div", {
@@ -5621,10 +5621,10 @@ exports["default"] = FormTopico;
 
 /***/ }),
 
-/***/ "./resources/js/views/home/components/Listagem.tsx":
-/*!*********************************************************!*\
-  !*** ./resources/js/views/home/components/Listagem.tsx ***!
-  \*********************************************************/
+/***/ "./resources/js/views/home/components/List.tsx":
+/*!*****************************************************!*\
+  !*** ./resources/js/views/home/components/List.tsx ***!
+  \*****************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -5670,16 +5670,16 @@ Object.defineProperty(exports, "__esModule", ({
 
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
-var Listagem = function (_super) {
-  __extends(Listagem, _super);
+var List = function (_super) {
+  __extends(List, _super);
 
-  function Listagem() {
+  function List() {
     return _super !== null && _super.apply(this, arguments) || this;
   }
 
-  Listagem.prototype.render = function () {
+  List.prototype.render = function () {
     return react_1["default"].createElement("section", {
-      className: "listagem"
+      className: "list"
     }, react_1["default"].createElement("div", {
       className: "card"
     }, react_1["default"].createElement("a", {
@@ -5705,10 +5705,10 @@ var Listagem = function (_super) {
     }, "Ver mais"));
   };
 
-  return Listagem;
+  return List;
 }(react_1["default"].Component);
 
-exports["default"] = Listagem;
+exports["default"] = List;
 
 /***/ }),
 

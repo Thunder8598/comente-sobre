@@ -1,9 +1,9 @@
 import React from "react";
 
-class Listagem extends React.Component {
+class List extends React.Component {
     render(): React.ReactNode {
         return (
-            <section className="listagem">
+            <section className="list">
                 <div className="card">
                     <a href="">
                         <div className="card-body">
@@ -28,4 +28,4 @@ class Listagem extends React.Component {
     }
 }
 
-export default Listagem;
+export default List;
