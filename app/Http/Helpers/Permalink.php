@@ -28,13 +28,12 @@ class Permalink
 
     public static function generatePermalink(string $title): string
     {
-        $title = trim($title);
-        $title = utf8_encode(strtolower($title));
-        $title = str_replace(" ", "-", $title);
-
         foreach (Permalink::$replacebleChars as $specialChar => $normalChar)
             $title = str_replace($specialChar, $normalChar, $title);
 
-        return $title;
+        $title = trim(($title));
+        $title = utf8_encode(strtolower($title));
+
+        return str_replace(" ", "-", $title);
     }
 }

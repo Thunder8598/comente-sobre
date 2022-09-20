@@ -18,11 +18,8 @@ class Topic extends Model
             ->simplePaginate(parent::LIMIT);
     }
 
-    public static function getTopicByPermalink(string $permalink, int $offset = 0): Paginator
+    public static function getTopicByPermalink(string $permalink, int $offset = 0): ?Topic
     {
-        return parent::where("permalink", "=", $permalink)
-            ->orderBy("topics.id", "desc")
-            ->offset($offset * parent::LIMIT)
-            ->simplePaginate(parent::LIMIT);
+        return parent::where("permalink", "like", "%{$permalink}%")->first();
     }
 }

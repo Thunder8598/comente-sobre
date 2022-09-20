@@ -38,4 +38,20 @@ class TopicController extends Controller
             return response(null, 500);
         }
     }
+
+    public function view(Request $request, string $permalink): JsonResponse
+    {
+        try {
+            $topic = Topic::getTopicByPermalink($permalink);
+
+            if (empty($topic))
+                return response()->json(null, 404);
+
+            return response()->json($topic);
+        } catch (Exception $e) {
+            Log::error(__CLASS__ . ":" . __FUNCTION__, ["error" => $e]);
+
+            return response()->json(null, 500);
+        }
+    }
 }

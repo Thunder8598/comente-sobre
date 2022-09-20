@@ -13,6 +13,13 @@ class TopicTest extends TestCase
      *
      * @return void
      */
+    public function testNotFoundTopic(): void
+    {
+        $response = $this->get("/api/topic/ola-mundo");
+
+        $response->assertNotFound();
+    }
+
     public function testCreateTopic(): void
     {
         $response = $this->post("/api/topic", ["title" => "Olá mundo"]);
@@ -29,7 +36,7 @@ class TopicTest extends TestCase
 
     public function testViewTopic(): void
     {
-        $response = $this->get("/api/topic/1");
+        $response = $this->get("/api/topic/ola-mundo");
 
         $response->assertSuccessful();
     }

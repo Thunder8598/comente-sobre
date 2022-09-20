@@ -23,4 +23,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::controller(TopicController::class)->group(function () {
     Route::get("/topic", "index");
     Route::post("/topic", "create");
+    Route::get("/topic/{permalink}", "view");
 });
