@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\TopicController;
 use App\Http\Helpers\Permalink;
 use Illuminate\Http\Request;
@@ -25,4 +26,8 @@ Route::controller(TopicController::class)->group(function () {
     Route::post("/topic", "create");
     Route::get("/topic/{permalink}", "view");
     Route::delete("/topic/{permalink}", "delete");
+});
+
+Route::controller(CommentController::class)->group(function(){
+    Route::post("/comment","create");
 });
