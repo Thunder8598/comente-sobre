@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Pagination\Paginator;
+use App\Models\Model;
 
 class Topic extends Model
 {
