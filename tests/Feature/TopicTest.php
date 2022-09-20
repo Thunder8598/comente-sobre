@@ -15,7 +15,7 @@ class TopicTest extends TestCase
      */
     public function testCreateTopic(): void
     {
-        $response = $this->post("/api/topic", ["topic" => "Olá mundo"]);
+        $response = $this->post("/api/topic", ["title" => "Olá mundo"]);
 
         $response->assertCreated();
     }
