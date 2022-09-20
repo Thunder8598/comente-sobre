@@ -20,4 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post("/topic", [TopicController::class, "create"]);
+Route::controller(TopicController::class)->group(function () {
+    Route::get("/topic", "index");
+    Route::post("/topic", "create");
+});

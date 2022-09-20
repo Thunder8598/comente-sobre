@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Pagination\Paginator;
 
 class Topic extends Model
 {
@@ -11,7 +11,14 @@ class Topic extends Model
 
     protected $fillable = ["title", "permalink"];
 
-    public function getTopicByPermalink(string $permalink, int $offset = 0): Collection
+    public static function getAll(int $offset = 0): Paginator
+    {
+        return parent::orderBy("topics.id", "desc")
+            ->offset($offset * parent::LIMIT)
+            ->simplePaginate(parent::LIMIT);
+    }
+
+    public static function getTopicByPermalink(string $permalink, int $offset = 0): Paginator
     {
         return parent::where("permalink", "=", $permalink)
             ->orderBy("topics.id", "desc")

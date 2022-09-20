@@ -8,9 +8,21 @@ use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Helpers\Permalink;
+use Illuminate\Http\JsonResponse;
 
 class TopicController extends Controller
 {
+    public function index(Request $request): JsonResponse
+    {
+        try {
+            return response()->json(Topic::getAll());
+        } catch (Exception $e) {
+            Log::error(__CLASS__ . ":" . __FUNCTION__, ["error" => $e]);
+
+            return response()->json(null, 500);
+        }
+    }
+
     public function create(Request $request): Response
     {
         try {

@@ -29,7 +29,7 @@ class Permalink
     public static function generatePermalink(string $title): string
     {
         $title = trim($title);
-        $title = strtolower($title);
+        $title = utf8_encode(strtolower($title));
         $title = str_replace(" ", "-", $title);
 
         foreach (Permalink::$replacebleChars as $specialChar => $normalChar)
