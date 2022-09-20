@@ -54,4 +54,17 @@ class TopicController extends Controller
             return response()->json(null, 500);
         }
     }
+
+    public function delete(Request $request, string $permalink): JsonResponse
+    {
+        try {
+            Topic::deleteTopicByPermalink($permalink);
+
+            return response()->json(null, 204);
+        } catch (Exception $e) {
+            Log::error(__CLASS__ . ":" . __FUNCTION__, ["error" => $e]);
+
+            return response()->json(null, 500);
+        }
+    }
 }

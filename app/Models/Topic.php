@@ -22,4 +22,9 @@ class Topic extends Model
     {
         return parent::where("permalink", "like", "%{$permalink}%")->first();
     }
+
+    public static function deleteTopicByPermalink(string $permalink): void
+    {
+        parent::where("permalink", "like", "%{$permalink}%")->delete();
+    }
 }

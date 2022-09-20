@@ -24,4 +24,5 @@ Route::controller(TopicController::class)->group(function () {
     Route::get("/topic", "index");
     Route::post("/topic", "create");
     Route::get("/topic/{permalink}", "view");
+    Route::delete("/topic/{permalink}", "delete");
 });

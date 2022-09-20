@@ -43,7 +43,7 @@ class TopicTest extends TestCase
 
     public function testDeleteTopic(): void
     {
-        $response = $this->delete("/api/topic/1");
+        $response = $this->delete("/api/topic/ola-mundo");
 
         $response->assertNoContent();
     }
