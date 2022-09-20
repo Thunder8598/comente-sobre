@@ -14,7 +14,7 @@ class Comment extends Model
 
     public static function getAll(int $offset = 0): Paginator
     {
-        return parent::orderBy("topics.id", "desc")
+        return parent::orderBy("comments.id", "desc")
             ->offset($offset * parent::LIMIT)
             ->simplePaginate(parent::LIMIT);
     }

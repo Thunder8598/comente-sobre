@@ -28,6 +28,7 @@ Route::controller(TopicController::class)->group(function () {
     Route::delete("/topic/{permalink}", "delete");
 });
 
-Route::controller(CommentController::class)->group(function(){
-    Route::post("/comment","create");
+Route::controller(CommentController::class)->group(function () {
+    Route::post("/comment", "create");
+    Route::get("/comment", "index");
 });

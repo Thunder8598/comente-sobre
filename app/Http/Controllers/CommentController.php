@@ -11,6 +11,17 @@ use Illuminate\Support\Facades\Log;
 
 class CommentController extends Controller
 {
+    public function index(Request $request): JsonResponse
+    {
+        try {
+            return response()->json(Comment::getAll(), Response::HTTP_OK);
+        } catch (Exception $e) {
+            Log::error(__CLASS__ . ":" . __FUNCTION__, ["error" => $e]);
+
+            return response()->json(null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     public function create(Request $request): JsonResponse
     {
         try {
