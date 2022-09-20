@@ -10,7 +10,7 @@ class Comment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["text", "email"];
+    protected $fillable = ["text", "email","topic"];
 
     public static function getAll(int $offset = 0): Paginator
     {

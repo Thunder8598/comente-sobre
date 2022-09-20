@@ -8,14 +8,9 @@ use Tests\TestCase;
 
 class CommentTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function testCreateNewComment(): void
     {
-        $response = $this->post("/api/comment", ["comment" => "Olá mundo", "email" => "teste@gmail.com.br"]);
+        $response = $this->post("/api/comment", ["comment" => "Olá mundo", "email" => "teste@gmail.com.br", "topic" => "1"]);
 
         $response->assertCreated();
     }

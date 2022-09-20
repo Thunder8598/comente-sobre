@@ -15,14 +15,14 @@ class TopicTest extends TestCase
      */
     public function testNotFoundTopic(): void
     {
-        $response = $this->get("/api/topic/ola-mundo");
+        $response = $this->get("/api/topic/ola-mundo2");
 
         $response->assertNotFound();
     }
 
     public function testCreateTopic(): void
     {
-        $response = $this->post("/api/topic", ["title" => "Olá mundo"]);
+        $response = $this->post("/api/topic", ["title" => "Olá mundo2"]);
 
         $response->assertCreated();
     }
@@ -36,14 +36,14 @@ class TopicTest extends TestCase
 
     public function testViewTopic(): void
     {
-        $response = $this->get("/api/topic/ola-mundo");
+        $response = $this->get("/api/topic/ola-mundo2");
 
         $response->assertSuccessful();
     }
 
     public function testDeleteTopic(): void
     {
-        $response = $this->delete("/api/topic/ola-mundo");
+        $response = $this->delete("/api/topic/ola-mundo2");
 
         $response->assertNoContent();
     }

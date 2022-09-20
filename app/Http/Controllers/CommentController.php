@@ -25,7 +25,7 @@ class CommentController extends Controller
     public function create(Request $request): JsonResponse
     {
         try {
-            $comment = new Comment(["text" => $request->input("comment"), "email" => $request->input("email")]);
+            $comment = new Comment(["text" => $request->input("comment"), "email" => $request->input("email"), "topic" => $request->input("topic")]);
             $comment->save();
 
             return response()->json(null, Response::HTTP_CREATED);
