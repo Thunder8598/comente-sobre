@@ -14,6 +14,11 @@ class CommentController extends Controller
     public function index(Request $request): JsonResponse
     {
         try {
+            $offset = (int)$request->input("page");
+            $offset == 0 ? 1 : $offset;
+
+            $offset--;
+
             return response()->json(Comment::getAll(), Response::HTTP_OK);
         } catch (Exception $e) {
             Log::error(__CLASS__ . ":" . __FUNCTION__, ["error" => $e]);

@@ -15,7 +15,12 @@ class TopicController extends Controller
     public function index(Request $request): JsonResponse
     {
         try {
-            return response()->json(Topic::getAll());
+            $offset = (int)$request->input("page");
+            $offset == 0 ? 1 : $offset;
+
+            $offset--;
+
+            return response()->json(Topic::getAll($offset));
         } catch (Exception $e) {
             Log::error(__CLASS__ . ":" . __FUNCTION__, ["error" => $e]);
 
