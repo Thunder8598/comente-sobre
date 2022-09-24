@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../../components/navbar/Navbar";
 import FormTopic from "./components/FormTopic";
-import List from "./components/List";
+import TopicList from "./components/TopicList";
 
 class Home extends React.Component {
     render(): React.ReactNode {
@@ -9,7 +9,7 @@ class Home extends React.Component {
             <main id="home">
                 <Navbar />
                 <FormTopic />
-                <List />
+                <TopicList />
             </main>
         );
     }

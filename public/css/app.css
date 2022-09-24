@@ -19,6 +19,11 @@
 .list {
   max-width: 760px;
   margin: auto;
+  height: 75vh;
+  overflow: auto;
+}
+.list > .card {
+  margin: 10px 0;
 }
 
 .form-comment {
@@ -35,4 +40,9 @@
 .list {
   max-width: 760px;
   margin: auto;
+  height: 75vh;
+  overflow: auto;
+}
+.list > .card {
+  margin: 10px 0;
 }
