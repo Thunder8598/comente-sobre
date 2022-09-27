@@ -32,6 +32,25 @@ class TopicTest extends TestCase
         $response = $this->get("/api/topic");
 
         $response->assertSuccessful();
+        $response->assertJsonStructure([
+            "current_page",
+            "data" => [
+                [
+                    "created_at",
+                    "id",
+                    "permalink",
+                    "title",
+                    "updated_at",
+                ]
+            ],
+            "first_page_url",
+            "from",
+            "next_page_url",
+            "path",
+            "per_page",
+            "prev_page_url",
+            "to",
+        ]);
     }
 
     public function testViewTopic(): void
