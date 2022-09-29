@@ -25,6 +25,13 @@ class TopicTest extends TestCase
         $response = $this->post("/api/topic", ["title" => "Olá mundo2"]);
 
         $response->assertCreated();
+        $response->assertJsonStructure([
+            "id",
+            "title",
+            "permalink",
+            "created_at",
+            "updated_at",
+        ]);
     }
 
     public function testGetTopics(): void

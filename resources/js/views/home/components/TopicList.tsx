@@ -1,13 +1,9 @@
 import React from "react";
 import List from "../../../components/list/List";
 import { Link } from "react-router-dom";
+import Contracts from "../../../contracts/Contracts";
 
-interface Topic {
-    title: string,
-    permalink: string
-}
-
-class TopicList extends List<Topic>{
+class TopicList extends List<Contracts.Topic>{
     protected resource: string = "topic";
 
     render(): React.ReactNode {
@@ -27,13 +23,13 @@ class TopicList extends List<Topic>{
                 }
 
                 {
-                    items.map(({ title, permalink }) => {
+                    items.map(({ title, permalink, updated_at }) => {
                         return (
                             <div className="card">
                                 <Link to={`/topic/${permalink}`}>
                                     <div className="card-body">
                                         <h5 className="card-title">{title}</h5>
-                                        <p className="card-text">Último post: 11/09/2022</p>
+                                        <p className="card-text">{updated_at ? `Último post: ${new Date(updated_at).toLocaleDateString()}` : ""}</p>
                                     </div>
                                 </Link>
                             </div>

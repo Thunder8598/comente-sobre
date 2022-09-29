@@ -28,19 +28,24 @@ class TopicController extends Controller
         }
     }
 
-    public function create(Request $request): Response
+    public function create(Request $request): JsonResponse
     {
         try {
-            $title = $request->input("title");
+            $title = $request->input("topic");
+            $topic = Topic::getTopicByPermalink(Permalink::generatePermalink($title));
+
+            if (!empty($topic))
+                return response()->json($topic, Response::HTTP_OK);
+
             $topic = new Topic(["title" => $title, "permalink" => Permalink::generatePermalink($title)]);
 
             $topic->save();
 
-            return response(null, 201);
+            return response()->json($topic, Response::HTTP_CREATED);
         } catch (Exception $e) {
             Log::error(__CLASS__ . ":" . __FUNCTION__, ["error" => $e]);
 
-            return response(null, 500);
+            return response()->json(null, 500);
         }
     }
 
