@@ -1,5 +1,6 @@
 import React from "react";
 import axios, { AxiosError } from "axios";
+import Contracts from "../../contracts/Contracts";
 
 interface State<I> {
     items: I[],
@@ -7,22 +8,10 @@ interface State<I> {
     message: string | null
 }
 
-interface APIResponse<I> {
-    current_page: number,
-    data: I[],
-    first_page_url: string,
-    from: number,
-    next_page_url: string | null,
-    path: string,
-    per_page: number,
-    prev_page_url: string | null,
-    to: number,
-}
-
-abstract class List<I> extends React.Component<any, State<I>>{
+abstract class List<I, P = any> extends React.Component<P, State<I>>{
     protected resource: string = "";
 
-    constructor(props: any) {
+    constructor(props: P) {
         super(props);
 
         this.state = {
@@ -39,9 +28,14 @@ abstract class List<I> extends React.Component<any, State<I>>{
     protected loadItems = async (): Promise<void> => {
         try {
             const { next_page_url, items } = this.state;
-            const { data } = await axios.get<APIResponse<I>>(next_page_url ?? `/api/${this.resource}`);
+            const { data } = await axios.get<Contracts.APIResponse<I>>(next_page_url ?? `/api/${this.resource}`);
 
             items.push(...data.data);
+
+            if (!items.length) {
+                this.setState({ message: "Nenhum item encontrado." });
+                return;
+            }
 
             this.setState({ items, next_page_url: data.next_page_url, message: null });
         } catch (error) {

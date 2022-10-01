@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Helpers\Permalink;
+use App\Models\Comment;
 use Illuminate\Http\JsonResponse;
 
 class TopicController extends Controller
@@ -57,7 +58,8 @@ class TopicController extends Controller
             if (empty($topic))
                 return response()->json(null, 404);
 
-            return response()->json($topic);
+            $comments = Comment::getCommentsByTopicId($topic->id);
+            return response()->json($comments);
         } catch (Exception $e) {
             Log::error(__CLASS__ . ":" . __FUNCTION__, ["error" => $e]);
 

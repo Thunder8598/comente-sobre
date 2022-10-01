@@ -5519,6 +5519,14 @@ var List = function (_super) {
             case 1:
               data = _b.sent().data;
               items.push.apply(items, data.data);
+
+              if (!items.length) {
+                this.setState({
+                  message: "Nenhum item encontrado."
+                });
+                return [2];
+              }
+
               this.setState({
                 items: items,
                 next_page_url: data.next_page_url,
@@ -6275,7 +6283,7 @@ var Navbar_1 = __importDefault(__webpack_require__(/*! ../../components/navbar/N
 
 var FormComment_1 = __importDefault(__webpack_require__(/*! ./components/FormComment */ "./resources/js/views/topic/components/FormComment.tsx"));
 
-var List_1 = __importDefault(__webpack_require__(/*! ./components/List */ "./resources/js/views/topic/components/List.tsx"));
+var CommentsList_1 = __importDefault(__webpack_require__(/*! ./components/CommentsList */ "./resources/js/views/topic/components/CommentsList.tsx"));
 
 var Topic = function (_super) {
   __extends(Topic, _super);
@@ -6287,13 +6295,119 @@ var Topic = function (_super) {
   Topic.prototype.render = function () {
     return react_1["default"].createElement("main", {
       id: "topic"
-    }, react_1["default"].createElement(Navbar_1["default"], null), react_1["default"].createElement(FormComment_1["default"], null), react_1["default"].createElement(List_1["default"], null));
+    }, react_1["default"].createElement(Navbar_1["default"], null), react_1["default"].createElement(FormComment_1["default"], null), react_1["default"].createElement(CommentsList_1["default"], {
+      permalink: this.props.match.params.permalink
+    }));
   };
 
   return Topic;
 }(react_1["default"].Component);
 
 exports["default"] = Topic;
+
+/***/ }),
+
+/***/ "./resources/js/views/topic/components/CommentsList.tsx":
+/*!**************************************************************!*\
+  !*** ./resources/js/views/topic/components/CommentsList.tsx ***!
+  \**************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __extends = this && this.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var List_1 = __importDefault(__webpack_require__(/*! ../../../components/list/List */ "./resources/js/components/list/List.tsx"));
+
+var CommentsList = function (_super) {
+  __extends(CommentsList, _super);
+
+  function CommentsList(props) {
+    var _this = _super.call(this, props) || this;
+
+    _this.resource = "topic/".concat(props.permalink);
+    return _this;
+  }
+
+  CommentsList.prototype.render = function () {
+    var _a = this.state,
+        items = _a.items,
+        message = _a.message,
+        next_page_url = _a.next_page_url;
+    return react_1["default"].createElement("section", {
+      className: "list"
+    }, !items.length && message ? react_1["default"].createElement("div", {
+      className: "card"
+    }, react_1["default"].createElement("div", {
+      className: "card-body"
+    }, react_1["default"].createElement("h5", {
+      style: {
+        textAlign: "center"
+      },
+      className: "card-title"
+    }, message))) : react_1["default"].createElement(react_1["default"].Fragment, null), items.map(function (_a) {
+      var email = _a.email,
+          text = _a.text;
+      return react_1["default"].createElement("div", {
+        className: "card"
+      }, react_1["default"].createElement("div", {
+        className: "card-body"
+      }, react_1["default"].createElement("small", null, email), react_1["default"].createElement("p", {
+        className: "card-text"
+      }, text)));
+    }), next_page_url ? react_1["default"].createElement("div", {
+      style: {
+        textAlign: "center"
+      }
+    }, react_1["default"].createElement("button", {
+      className: "btn btn-outline-primary",
+      onClick: this.loadItems
+    }, "Ver mais")) : react_1["default"].createElement(react_1["default"].Fragment, null));
+  };
+
+  return CommentsList;
+}(List_1["default"]);
+
+exports["default"] = CommentsList;
 
 /***/ }),
 
@@ -6375,89 +6489,6 @@ var FormComment = function (_super) {
 }(react_1["default"].Component);
 
 exports["default"] = FormComment;
-
-/***/ }),
-
-/***/ "./resources/js/views/topic/components/List.tsx":
-/*!******************************************************!*\
-  !*** ./resources/js/views/topic/components/List.tsx ***!
-  \******************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var __extends = this && this.__extends || function () {
-  var _extendStatics = function extendStatics(d, b) {
-    _extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) {
-        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-      }
-    };
-
-    return _extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-
-    _extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var __importDefault = this && this.__importDefault || function (mod) {
-  return mod && mod.__esModule ? mod : {
-    "default": mod
-  };
-};
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-var List = function (_super) {
-  __extends(List, _super);
-
-  function List() {
-    return _super !== null && _super.apply(this, arguments) || this;
-  }
-
-  List.prototype.render = function () {
-    return react_1["default"].createElement("section", {
-      className: "list"
-    }, react_1["default"].createElement("div", {
-      className: "card"
-    }, react_1["default"].createElement("div", {
-      className: "card-body"
-    }, react_1["default"].createElement("small", null, "teste@teste.com.br"), react_1["default"].createElement("p", {
-      className: "card-text"
-    }, "\xDAltimo post: 11/09/2022"))), react_1["default"].createElement("div", {
-      className: "card"
-    }, react_1["default"].createElement("div", {
-      className: "card-body"
-    }, react_1["default"].createElement("small", null, "teste@teste.com.br"), react_1["default"].createElement("p", {
-      className: "card-text"
-    }, "\xDAltimo post: 11/09/2022"))), react_1["default"].createElement("button", {
-      className: "btn btn-outline-primary"
-    }, "Ver mais"));
-  };
-
-  return List;
-}(react_1["default"].Component);
-
-exports["default"] = List;
 
 /***/ }),
 

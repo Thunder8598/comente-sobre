@@ -1,15 +1,18 @@
 import React from "react";
 import Navbar from "../../components/navbar/Navbar";
 import FormComment from "./components/FormComment";
-import List from "./components/List";
+import CommentsList from "./components/CommentsList";
+import { RouteComponentProps } from "react-router-dom";
 
-class Topic extends React.Component {
+interface Props extends RouteComponentProps<{ permalink: string }> { }
+
+class Topic extends React.Component<Props> {
     render(): React.ReactNode {
         return (
             <main id="topic">
-                <Navbar/>
-                <FormComment/>
-                <List/>
+                <Navbar />
+                <FormComment />
+                <CommentsList permalink={this.props.match.params.permalink} />
             </main>
         );
     }

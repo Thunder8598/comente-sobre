@@ -22,7 +22,7 @@ class TopicTest extends TestCase
 
     public function testCreateTopic(): void
     {
-        $response = $this->post("/api/topic", ["title" => "Olá mundo2"]);
+        $response = $this->post("/api/topic", ["topic" => "Ola mundo2"]);
 
         $response->assertCreated();
         $response->assertJsonStructure([

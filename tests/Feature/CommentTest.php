@@ -20,5 +20,25 @@ class CommentTest extends TestCase
         $response = $this->get("/api/comment");
 
         $response->assertSuccessful();
+        $response->assertJsonStructure([
+            "current_page",
+            "data" => [
+                [
+                    "id",
+                    "created_at",
+                    "email",
+                    "text",
+                    "topic",
+                    "updated_at",
+                ]
+            ],
+            "first_page_url",
+            "from",
+            "next_page_url",
+            "path",
+            "per_page",
+            "prev_page_url",
+            "to",
+        ]);
     }
 }
