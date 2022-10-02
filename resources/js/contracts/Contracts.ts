@@ -1,4 +1,10 @@
 namespace Contracts {
+    export interface ListingState<I> {
+        items: I[],
+        next_page_url: string | null,
+        message: string | null
+    }
+
     export interface APIResponse<I> {
         current_page: number,
         data: I[],

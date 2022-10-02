@@ -10,7 +10,7 @@ class CommentTest extends TestCase
 {
     public function testCreateNewComment(): void
     {
-        $response = $this->post("/api/comment", ["comment" => "Olá mundo", "email" => "teste@gmail.com.br", "topic" => "1"]);
+        $response = $this->post("/api/comment", ["comment" => "Olá mundo", "email" => "teste@gmail.com.br", "permalink" => "ola-mundo"]);
 
         $response->assertCreated();
     }

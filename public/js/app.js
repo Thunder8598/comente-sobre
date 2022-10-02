@@ -5302,10 +5302,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./resources/js/components/list/List.tsx":
-/*!***********************************************!*\
-  !*** ./resources/js/components/list/List.tsx ***!
-  \***********************************************/
+/***/ "./resources/js/components/navbar/Navbar.tsx":
+/*!***************************************************!*\
+  !*** ./resources/js/components/navbar/Navbar.tsx ***!
+  \***************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -5338,6 +5338,75 @@ var __extends = this && this.__extends || function () {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
 }();
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var Navbar = function (_super) {
+  __extends(Navbar, _super);
+
+  function Navbar() {
+    return _super !== null && _super.apply(this, arguments) || this;
+  }
+
+  Navbar.prototype.render = function () {
+    return react_1["default"].createElement("nav", {
+      className: "navbar navbar-light bg-light justify-content-between shadow"
+    }, react_1["default"].createElement("a", {
+      className: "navbar-brand"
+    }, "Navbar"), react_1["default"].createElement("form", {
+      className: "d-flex"
+    }, react_1["default"].createElement("input", {
+      className: "form-control mr-sm-2",
+      type: "search",
+      placeholder: "Busca",
+      "aria-label": "Busca"
+    }), react_1["default"].createElement("button", {
+      className: "btn btn-outline-success my-2 my-sm-0",
+      type: "submit"
+    }, "Busca")));
+  };
+
+  return Navbar;
+}(react_1["default"].Component);
+
+exports["default"] = Navbar;
+
+/***/ }),
+
+/***/ "./resources/js/utils/Listing.tsx":
+/*!****************************************!*\
+  !*** ./resources/js/utils/Listing.tsx ***!
+  \****************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = this && this.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
 
 var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
   function adopt(value) {
@@ -5492,19 +5561,13 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
 var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 
-var List = function (_super) {
-  __extends(List, _super);
+var Listing = function () {
+  function Listing(resource, state, setState) {
+    var _this = this;
 
-  function List(props) {
-    var _this = _super.call(this, props) || this;
-
-    _this.resource = "";
-
-    _this.loadItems = function () {
+    this.loadItems = function () {
       return __awaiter(_this, void 0, void 0, function () {
         var _a, next_page_url, items, data, error_1, response;
 
@@ -5513,7 +5576,7 @@ var List = function (_super) {
             case 0:
               _b.trys.push([0, 2,, 3]);
 
-              _a = this.state, next_page_url = _a.next_page_url, items = _a.items;
+              _a = __assign({}, this.state), next_page_url = _a.next_page_url, items = _a.items;
               return [4, axios_1["default"].get(next_page_url !== null && next_page_url !== void 0 ? next_page_url : "/api/".concat(this.resource))];
 
             case 1:
@@ -5522,7 +5585,9 @@ var List = function (_super) {
 
               if (!items.length) {
                 this.setState({
-                  message: "Nenhum item encontrado."
+                  message: "Nenhum item encontrado.",
+                  items: items,
+                  next_page_url: next_page_url
                 });
                 return [2];
               }
@@ -5541,13 +5606,17 @@ var List = function (_super) {
               switch (response === null || response === void 0 ? void 0 : response.status) {
                 case 404:
                   this.setState({
-                    message: "Nenhum item encontrado."
+                    message: "Nenhum item encontrado.",
+                    items: [],
+                    next_page_url: null
                   });
                   break;
 
                 default:
                   this.setState({
-                    message: "Por favor tente mais tarde."
+                    message: "Por favor tente mais tarde.",
+                    items: [],
+                    next_page_url: null
                   });
                   break;
               }
@@ -5561,103 +5630,25 @@ var List = function (_super) {
       });
     };
 
-    _this.state = {
-      items: [],
-      next_page_url: null,
-      message: null
+    this.addItem = function (item) {
+      var items = __assign({}, _this.state).items;
+
+      items.unshift(item);
+
+      _this.setState(__assign(__assign({}, _this.state), {
+        items: items
+      }));
     };
-    return _this;
+
+    this.resource = resource;
+    this.state = state;
+    this.setState = setState;
   }
 
-  List.prototype.componentDidMount = function () {
-    this.loadItems();
-  };
-
-  return List;
-}(react_1["default"].Component);
-
-exports["default"] = List;
-
-/***/ }),
-
-/***/ "./resources/js/components/navbar/Navbar.tsx":
-/*!***************************************************!*\
-  !*** ./resources/js/components/navbar/Navbar.tsx ***!
-  \***************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var __extends = this && this.__extends || function () {
-  var _extendStatics = function extendStatics(d, b) {
-    _extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) {
-        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-      }
-    };
-
-    return _extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-
-    _extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
+  return Listing;
 }();
 
-var __importDefault = this && this.__importDefault || function (mod) {
-  return mod && mod.__esModule ? mod : {
-    "default": mod
-  };
-};
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-var Navbar = function (_super) {
-  __extends(Navbar, _super);
-
-  function Navbar() {
-    return _super !== null && _super.apply(this, arguments) || this;
-  }
-
-  Navbar.prototype.render = function () {
-    return react_1["default"].createElement("nav", {
-      className: "navbar navbar-light bg-light justify-content-between shadow"
-    }, react_1["default"].createElement("a", {
-      className: "navbar-brand"
-    }, "Navbar"), react_1["default"].createElement("form", {
-      className: "d-flex"
-    }, react_1["default"].createElement("input", {
-      className: "form-control mr-sm-2",
-      type: "search",
-      placeholder: "Busca",
-      "aria-label": "Busca"
-    }), react_1["default"].createElement("button", {
-      className: "btn btn-outline-success my-2 my-sm-0",
-      type: "submit"
-    }, "Busca")));
-  };
-
-  return Navbar;
-}(react_1["default"].Component);
-
-exports["default"] = Navbar;
+exports["default"] = Listing;
 
 /***/ }),
 
@@ -6139,17 +6130,26 @@ Object.defineProperty(exports, "__esModule", ({
 
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
-var List_1 = __importDefault(__webpack_require__(/*! ../../../components/list/List */ "./resources/js/components/list/List.tsx"));
-
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
+var Listing_1 = __importDefault(__webpack_require__(/*! ../../../utils/Listing */ "./resources/js/utils/Listing.tsx"));
 
 var TopicList = function (_super) {
   __extends(TopicList, _super);
 
-  function TopicList() {
-    var _this = _super !== null && _super.apply(this, arguments) || this;
+  function TopicList(props) {
+    var _this = _super.call(this, props) || this;
 
-    _this.resource = "topic";
+    _this.setListingState = function (data) {
+      _this.setState(data);
+    };
+
+    _this.state = {
+      items: [],
+      message: null,
+      next_page_url: null
+    };
+    _this.listing = new Listing_1["default"]("topic", _this.state, _this.setListingState);
     return _this;
   }
 
@@ -6190,12 +6190,16 @@ var TopicList = function (_super) {
       }
     }, react_1["default"].createElement("button", {
       className: "btn btn-outline-primary",
-      onClick: this.loadItems
+      onClick: this.listing.loadItems
     }, "Ver mais")) : react_1["default"].createElement(react_1["default"].Fragment, null));
   };
 
+  TopicList.prototype.componentDidMount = function () {
+    this.listing.loadItems();
+  };
+
   return TopicList;
-}(List_1["default"]);
+}(react_1["default"].Component);
 
 exports["default"] = TopicList;
 
@@ -6288,15 +6292,30 @@ var CommentsList_1 = __importDefault(__webpack_require__(/*! ./components/Commen
 var Topic = function (_super) {
   __extends(Topic, _super);
 
-  function Topic() {
-    return _super !== null && _super.apply(this, arguments) || this;
+  function Topic(props) {
+    var _this = _super.call(this, props) || this;
+
+    _this.setListing = function (listing) {
+      _this.listing = listing;
+    };
+
+    _this.getListing = function () {
+      return _this.listing;
+    };
+
+    _this.listing = null;
+    return _this;
   }
 
   Topic.prototype.render = function () {
     return react_1["default"].createElement("main", {
       id: "topic"
-    }, react_1["default"].createElement(Navbar_1["default"], null), react_1["default"].createElement(FormComment_1["default"], null), react_1["default"].createElement(CommentsList_1["default"], {
-      permalink: this.props.match.params.permalink
+    }, react_1["default"].createElement(Navbar_1["default"], null), react_1["default"].createElement(FormComment_1["default"], {
+      permalink: this.props.match.params.permalink,
+      getListing: this.getListing
+    }), react_1["default"].createElement(CommentsList_1["default"], {
+      permalink: this.props.match.params.permalink,
+      setListing: this.setListing
     }));
   };
 
@@ -6356,7 +6375,7 @@ Object.defineProperty(exports, "__esModule", ({
 
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
-var List_1 = __importDefault(__webpack_require__(/*! ../../../components/list/List */ "./resources/js/components/list/List.tsx"));
+var Listing_1 = __importDefault(__webpack_require__(/*! ../../../utils/Listing */ "./resources/js/utils/Listing.tsx"));
 
 var CommentsList = function (_super) {
   __extends(CommentsList, _super);
@@ -6364,7 +6383,19 @@ var CommentsList = function (_super) {
   function CommentsList(props) {
     var _this = _super.call(this, props) || this;
 
-    _this.resource = "topic/".concat(props.permalink);
+    _this.setListingState = function (data) {
+      _this.setState(data);
+    };
+
+    _this.state = {
+      items: [],
+      message: null,
+      next_page_url: null
+    };
+    _this.listing = new Listing_1["default"]("topic/".concat(props.permalink), _this.state, _this.setListingState);
+
+    _this.props.setListing(_this.listing);
+
     return _this;
   }
 
@@ -6400,12 +6431,16 @@ var CommentsList = function (_super) {
       }
     }, react_1["default"].createElement("button", {
       className: "btn btn-outline-primary",
-      onClick: this.loadItems
+      onClick: this.listing.loadItems
     }, "Ver mais")) : react_1["default"].createElement(react_1["default"].Fragment, null));
   };
 
+  CommentsList.prototype.componentDidMount = function () {
+    this.listing.loadItems();
+  };
+
   return CommentsList;
-}(List_1["default"]);
+}(react_1["default"].Component);
 
 exports["default"] = CommentsList;
 
@@ -6448,6 +6483,149 @@ var __extends = this && this.__extends || function () {
   };
 }();
 
+var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function (resolve) {
+      resolve(value);
+    });
+  }
+
+  return new (P || (P = Promise))(function (resolve, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function step(result) {
+      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+
+var __generator = this && this.__generator || function (thisArg, body) {
+  var _ = {
+    label: 0,
+    sent: function sent() {
+      if (t[0] & 1) throw t[1];
+      return t[1];
+    },
+    trys: [],
+    ops: []
+  },
+      f,
+      y,
+      t,
+      g;
+  return g = {
+    next: verb(0),
+    "throw": verb(1),
+    "return": verb(2)
+  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+    return this;
+  }), g;
+
+  function verb(n) {
+    return function (v) {
+      return step([n, v]);
+    };
+  }
+
+  function step(op) {
+    if (f) throw new TypeError("Generator is already executing.");
+
+    while (_) {
+      try {
+        if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+        if (y = 0, t) op = [op[0] & 2, t.value];
+
+        switch (op[0]) {
+          case 0:
+          case 1:
+            t = op;
+            break;
+
+          case 4:
+            _.label++;
+            return {
+              value: op[1],
+              done: false
+            };
+
+          case 5:
+            _.label++;
+            y = op[1];
+            op = [0];
+            continue;
+
+          case 7:
+            op = _.ops.pop();
+
+            _.trys.pop();
+
+            continue;
+
+          default:
+            if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+              _ = 0;
+              continue;
+            }
+
+            if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+              _.label = op[1];
+              break;
+            }
+
+            if (op[0] === 6 && _.label < t[1]) {
+              _.label = t[1];
+              t = op;
+              break;
+            }
+
+            if (t && _.label < t[2]) {
+              _.label = t[2];
+
+              _.ops.push(op);
+
+              break;
+            }
+
+            if (t[2]) _.ops.pop();
+
+            _.trys.pop();
+
+            continue;
+        }
+
+        op = body.call(thisArg, _);
+      } catch (e) {
+        op = [6, e];
+        y = 0;
+      } finally {
+        f = t = 0;
+      }
+    }
+
+    if (op[0] & 5) throw op[1];
+    return {
+      value: op[0] ? op[1] : void 0,
+      done: true
+    };
+  }
+};
+
 var __importDefault = this && this.__importDefault || function (mod) {
   return mod && mod.__esModule ? mod : {
     "default": mod
@@ -6458,27 +6636,75 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 
+var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
+
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
 var FormComment = function (_super) {
   __extends(FormComment, _super);
 
   function FormComment() {
-    return _super !== null && _super.apply(this, arguments) || this;
+    var _this = _super !== null && _super.apply(this, arguments) || this;
+
+    _this.onSubmit = function (evt) {
+      return __awaiter(_this, void 0, void 0, function () {
+        var formData, response, error_1;
+
+        var _a;
+
+        return __generator(this, function (_b) {
+          switch (_b.label) {
+            case 0:
+              evt.preventDefault();
+              formData = new FormData(evt.currentTarget);
+              formData.append("permalink", this.props.permalink);
+              _b.label = 1;
+
+            case 1:
+              _b.trys.push([1, 3,, 4]);
+
+              return [4, axios_1["default"].post("/api/comment", formData)];
+
+            case 2:
+              response = _b.sent();
+              (_a = this.props.getListing()) === null || _a === void 0 ? void 0 : _a.addItem(response.data);
+              return [3, 4];
+
+            case 3:
+              error_1 = _b.sent();
+              console.error(error_1);
+              return [3, 4];
+
+            case 4:
+              return [2];
+          }
+        });
+      });
+    };
+
+    return _this;
   }
 
   FormComment.prototype.render = function () {
     return react_1["default"].createElement("section", {
       className: "form-comment"
     }, react_1["default"].createElement("form", {
-      className: "d-flex justify-content-between"
+      className: "d-flex flex-column justify-content-between",
+      onSubmit: this.onSubmit
     }, react_1["default"].createElement("div", {
       className: "form-group"
     }, react_1["default"].createElement("input", {
+      type: "email",
+      name: "email",
+      className: "form-control",
+      placeholder: "E-mail",
+      required: true
+    }), react_1["default"].createElement("input", {
       type: "text",
       name: "comment",
       className: "form-control",
-      placeholder: "Coment\xE1rio"
+      placeholder: "Coment\xE1rio",
+      required: true
     })), react_1["default"].createElement("button", {
       type: "submit",
       className: "btn btn-primary"

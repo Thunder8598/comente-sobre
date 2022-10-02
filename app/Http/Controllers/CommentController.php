@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Helpers\Permalink;
 use App\Models\Comment;
+use App\Models\Topic;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -30,10 +32,16 @@ class CommentController extends Controller
     public function create(Request $request): JsonResponse
     {
         try {
-            $comment = new Comment(["text" => $request->input("comment"), "email" => $request->input("email"), "topic" => $request->input("topic")]);
+            $permalink = Permalink::generatePermalink($request->input("permalink"));
+            $topic = Topic::getTopicByPermalink($permalink);
+
+            if (empty($topic))
+                throw new Exception("Topic not found");
+
+            $comment = new Comment(["text" => $request->input("comment"), "email" => $request->input("email"), "topic" => $topic->id]);
             $comment->save();
 
-            return response()->json(null, Response::HTTP_CREATED);
+            return response()->json($comment, Response::HTTP_CREATED);
         } catch (Exception $e) {
             Log::error(__CLASS__ . ":" . __FUNCTION__, ["error" => $e]);
 

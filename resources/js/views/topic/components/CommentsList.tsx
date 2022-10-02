@@ -1,16 +1,28 @@
 import React from "react";
-import List from "../../../components/list/List";
 import Contracts from "../../../contracts/Contracts";
+import Listing from "../../../utils/Listing";
 
 interface Props {
-    permalink: string
+    permalink: string,
+    setListing: (listing: Listing<Contracts.Comment>) => void
 }
 
-class CommentsList extends List<Contracts.Comment, Props> {
+interface State extends Contracts.ListingState<Contracts.Comment> { }
+
+class CommentsList extends React.Component<Props, State> {
+    private listing: Listing<Contracts.Comment>;
+
     constructor(props: Props) {
         super(props);
 
-        this.resource = `topic/${props.permalink}`;
+        this.state = {
+            items: [],
+            message: null,
+            next_page_url: null
+        };
+
+        this.listing = new Listing<Contracts.Comment>(`topic/${props.permalink}`, this.state, this.setListingState);
+        this.props.setListing(this.listing);
     }
 
     render(): React.ReactNode {
@@ -45,12 +57,20 @@ class CommentsList extends List<Contracts.Comment, Props> {
                 {next_page_url ?
                     (
                         <div style={{ textAlign: "center" }}>
-                            <button className="btn btn-outline-primary" onClick={this.loadItems}>Ver mais</button>
+                            <button className="btn btn-outline-primary" onClick={this.listing.loadItems}>Ver mais</button>
                         </div>
                     ) : <></>
                 }
             </section>
         );
+    }
+
+    componentDidMount(): void {
+        this.listing.loadItems();
+    }
+
+    private setListingState = (data: Contracts.ListingState<Contracts.Comment>) => {
+        this.setState(data);
     }
 }
 

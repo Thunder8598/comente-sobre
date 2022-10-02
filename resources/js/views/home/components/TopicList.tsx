@@ -1,10 +1,24 @@
 import React from "react";
-import List from "../../../components/list/List";
 import { Link } from "react-router-dom";
 import Contracts from "../../../contracts/Contracts";
+import Listing from "../../../utils/Listing";
 
-class TopicList extends List<Contracts.Topic>{
-    protected resource: string = "topic";
+interface State extends Contracts.ListingState<Contracts.Topic> { }
+
+class TopicList extends React.Component<any, State> {
+    private listing: Listing<Contracts.Topic>;
+
+    constructor(props: any) {
+        super(props);
+
+        this.state = {
+            items: [],
+            message: null,
+            next_page_url: null
+        };
+
+        this.listing = new Listing<Contracts.Topic>("topic", this.state, this.setListingState);
+    }
 
     render(): React.ReactNode {
         const { items, message, next_page_url } = this.state;
@@ -40,12 +54,20 @@ class TopicList extends List<Contracts.Topic>{
                 {next_page_url ?
                     (
                         <div style={{ textAlign: "center" }}>
-                            <button className="btn btn-outline-primary" onClick={this.loadItems}>Ver mais</button>
+                            <button className="btn btn-outline-primary" onClick={this.listing.loadItems}>Ver mais</button>
                         </div>
                     ) : <></>
                 }
             </section>
         );
+    }
+
+    componentDidMount(): void {
+        this.listing.loadItems();
+    }
+
+    private setListingState = (data: Contracts.ListingState<Contracts.Topic>): void => {
+        this.setState(data);
     }
 }
 
