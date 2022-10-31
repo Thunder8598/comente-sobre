@@ -7,7 +7,8 @@ interface Props {
     setListing: (listing: Listing<Contracts.Comment>) => void
 }
 
-interface State extends Contracts.ListingState<Contracts.Comment> { }
+interface State extends Contracts.ListingState<Contracts.Comment> {
+}
 
 class CommentsList extends React.Component<Props, State> {
     private listing: Listing<Contracts.Comment>;
@@ -21,12 +22,14 @@ class CommentsList extends React.Component<Props, State> {
             next_page_url: null
         };
 
-        this.listing = new Listing<Contracts.Comment>(`topic/${props.permalink}`, this.state, this.setListingState);
+        this.listing = new Listing<Contracts.Comment>(`topic/${props.permalink}`, this.getListingState, this.setListingState);
         this.props.setListing(this.listing);
     }
 
     render(): React.ReactNode {
-        const { items, message, next_page_url } = this.state;
+        const {items, message, next_page_url} = this.state;
+
+        console.log(this.state)
 
         return (
             <section className="list">
@@ -35,14 +38,14 @@ class CommentsList extends React.Component<Props, State> {
                         (
                             <div className="card">
                                 <div className="card-body">
-                                    <h5 style={{ textAlign: "center" }} className="card-title">{message}</h5>
+                                    <h5 style={{textAlign: "center"}} className="card-title">{message}</h5>
                                 </div>
                             </div>
                         ) : <></>
                 }
 
                 {
-                    items.map(({ email, text }) => {
+                    items.map(({email, text}) => {
                         return (
                             <div className="card">
                                 <div className="card-body">
@@ -56,8 +59,9 @@ class CommentsList extends React.Component<Props, State> {
 
                 {next_page_url ?
                     (
-                        <div style={{ textAlign: "center" }}>
-                            <button className="btn btn-outline-primary" onClick={this.listing.loadItems}>Ver mais</button>
+                        <div style={{textAlign: "center"}}>
+                            <button className="btn btn-outline-primary" onClick={this.listing.loadItems}>Ver mais
+                            </button>
                         </div>
                     ) : <></>
                 }
@@ -71,6 +75,10 @@ class CommentsList extends React.Component<Props, State> {
 
     private setListingState = (data: Contracts.ListingState<Contracts.Comment>) => {
         this.setState(data);
+    }
+
+    private getListingState = (): Contracts.ListingState<Contracts.Comment> => {
+        return this.state;
     }
 }
 

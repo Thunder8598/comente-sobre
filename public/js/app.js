@@ -5564,7 +5564,7 @@ Object.defineProperty(exports, "__esModule", ({
 var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 
 var Listing = function () {
-  function Listing(resource, state, setState) {
+  function Listing(resource, getState, setState) {
     var _this = this;
 
     this.loadItems = function () {
@@ -5576,7 +5576,7 @@ var Listing = function () {
             case 0:
               _b.trys.push([0, 2,, 3]);
 
-              _a = __assign({}, this.state), next_page_url = _a.next_page_url, items = _a.items;
+              _a = __assign({}, this.getState()), next_page_url = _a.next_page_url, items = _a.items;
               return [4, axios_1["default"].get(next_page_url !== null && next_page_url !== void 0 ? next_page_url : "/api/".concat(this.resource))];
 
             case 1:
@@ -5631,17 +5631,17 @@ var Listing = function () {
     };
 
     this.addItem = function (item) {
-      var items = __assign({}, _this.state).items;
+      var items = __assign({}, _this.getState()).items;
 
       items.unshift(item);
 
-      _this.setState(__assign(__assign({}, _this.state), {
+      _this.setState(__assign(__assign({}, _this.getState()), {
         items: items
       }));
     };
 
     this.resource = resource;
-    this.state = state;
+    this.getState = getState;
     this.setState = setState;
   }
 
@@ -6387,12 +6387,16 @@ var CommentsList = function (_super) {
       _this.setState(data);
     };
 
+    _this.getListingState = function () {
+      return _this.state;
+    };
+
     _this.state = {
       items: [],
       message: null,
       next_page_url: null
     };
-    _this.listing = new Listing_1["default"]("topic/".concat(props.permalink), _this.state, _this.setListingState);
+    _this.listing = new Listing_1["default"]("topic/".concat(props.permalink), _this.getListingState, _this.setListingState);
 
     _this.props.setListing(_this.listing);
 
@@ -6404,6 +6408,7 @@ var CommentsList = function (_super) {
         items = _a.items,
         message = _a.message,
         next_page_url = _a.next_page_url;
+    console.log(this.state);
     return react_1["default"].createElement("section", {
       className: "list"
     }, !items.length && message ? react_1["default"].createElement("div", {
