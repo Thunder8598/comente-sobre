@@ -39,6 +39,10 @@ class CommentController extends Controller
                 throw new Exception("Topic not found");
 
             $comment = new Comment(["text" => $request->input("comment"), "email" => $request->input("email"), "topic" => $topic->id]);
+
+            if (!empty($responseTo = $request->input("response_to")))
+                $comment->response_to = $responseTo;
+
             $comment->save();
 
             return response()->json($comment, Response::HTTP_CREATED);

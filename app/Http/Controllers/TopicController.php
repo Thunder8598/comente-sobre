@@ -58,8 +58,9 @@ class TopicController extends Controller
             if (empty($topic))
                 return response()->json(null, 404);
 
-            $comments = Comment::getCommentsByTopicId($topic->id);
-            return response()->json($comments);
+            $response = Comment::getCommentsByTopicId($topic->id);
+
+            return response()->json($response);
         } catch (Exception $e) {
             Log::error(__CLASS__ . ":" . __FUNCTION__, ["error" => $e]);
 
