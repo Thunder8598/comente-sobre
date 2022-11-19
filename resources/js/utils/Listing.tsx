@@ -1,7 +1,7 @@
 import axios, {AxiosError} from "axios";
 import Contracts from "../contracts/Contracts";
 
-class Listing<ItemType> {
+class Listing<ItemType extends { id: number }> {
     private resource: string;
     private getState: () => Contracts.ListingState<ItemType>;
     private setState: (state: Contracts.ListingState<ItemType>) => void;
@@ -44,6 +44,21 @@ class Listing<ItemType> {
         const {items} = {...this.getState()};
 
         items.unshift(item);
+
+        this.setState({...this.getState(), items});
+    }
+
+    public findItem = (id: number): ItemType | undefined => {
+        const {items} = this.getState();
+
+        return items.find((item) => item.id == id);
+    }
+
+    public replaceItem = (newItem: ItemType): void => {
+        const {items} = {...this.getState()};
+        const index = items.findIndex((item) => item.id == newItem.id);
+
+        items[index] = newItem;
 
         this.setState({...this.getState(), items});
     }

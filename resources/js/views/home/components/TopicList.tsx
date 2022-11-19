@@ -17,7 +17,7 @@ class TopicList extends React.Component<any, State> {
             next_page_url: null
         };
 
-        this.listing = new Listing<Contracts.Topic>("topic", this.state, this.setListingState);
+        this.listing = new Listing<Contracts.Topic>("topic", this.getListingState, this.setListingState);
     }
 
     render(): React.ReactNode {
@@ -68,6 +68,10 @@ class TopicList extends React.Component<any, State> {
 
     private setListingState = (data: Contracts.ListingState<Contracts.Topic>): void => {
         this.setState(data);
+    }
+
+    private getListingState = (): Contracts.ListingState<Contracts.Topic> => {
+        return this.state;
     }
 }
 

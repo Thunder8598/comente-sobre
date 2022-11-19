@@ -1,13 +1,17 @@
 import React from "react";
 import Contracts from "../../../contracts/Contracts";
 import Listing from "../../../utils/Listing";
+import FormComment from "./FormComment";
 
 interface Props {
     permalink: string,
+    getListing: () => Listing<Contracts.Comment> | null,
     setListing: (listing: Listing<Contracts.Comment>) => void
 }
 
 interface State extends Contracts.ListingState<Contracts.Comment> {
+    anwser: number | null,
+    showResponses: boolean
 }
 
 class CommentsList extends React.Component<Props, State> {
@@ -19,7 +23,9 @@ class CommentsList extends React.Component<Props, State> {
         this.state = {
             items: [],
             message: null,
-            next_page_url: null
+            next_page_url: null,
+            anwser: null,
+            showResponses: false
         };
 
         this.listing = new Listing<Contracts.Comment>(`topic/${props.permalink}`, this.getListingState, this.setListingState);
@@ -27,9 +33,8 @@ class CommentsList extends React.Component<Props, State> {
     }
 
     render(): React.ReactNode {
-        const {items, message, next_page_url} = this.state;
-
-        console.log(this.state)
+        const {permalink, getListing} = this.props;
+        const {items, message, next_page_url, anwser, showResponses} = this.state;
 
         return (
             <section className="list">
@@ -45,13 +50,46 @@ class CommentsList extends React.Component<Props, State> {
                 }
 
                 {
-                    items.map(({email, text}) => {
+                    items.map(({id, email, text, responses}) => {
                         return (
                             <div className="card">
                                 <div className="card-body">
                                     <small>{email}</small>
                                     <p className="card-text">{text}</p>
+                                    <button className="btn btn-link"
+                                            onClick={() => this.setState({anwser: id})}>Responder
+                                    </button>
+
+                                    <button className="btn btn-link"
+                                            onClick={() => this.setState({showResponses: !showResponses})}>Ver respostas
+                                    </button>
+
+                                    {
+                                        showResponses ?
+                                            (
+                                                <div>
+                                                    {
+                                                        responses.map(({email, text}) => (
+                                                            <div className="card">
+                                                                <div className="card-body">
+                                                                    <small>{email}</small>
+                                                                    <p className="card-text">{text}</p>
+                                                                </div>
+                                                            </div>
+                                                        ))
+                                                    }
+                                                </div>
+                                            ) : <></>
+                                    }
+
                                 </div>
+
+                                {
+                                    anwser && anwser == id ?
+                                        <FormComment permalink={permalink} getListing={getListing}
+                                                     responseTo={anwser}/> : <></>
+                                }
+
                             </div>
                         );
                     })
@@ -60,7 +98,8 @@ class CommentsList extends React.Component<Props, State> {
                 {next_page_url ?
                     (
                         <div style={{textAlign: "center"}}>
-                            <button className="btn btn-outline-primary" onClick={this.listing.loadItems}>Ver mais
+                            <button className="btn btn-outline-primary"
+                                    onClick={this.listing.loadItems}>Ver mais
                             </button>
                         </div>
                     ) : <></>

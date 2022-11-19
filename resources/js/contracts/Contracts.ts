@@ -32,6 +32,8 @@ namespace Contracts {
         text: string,
         topic: string,
         updated_at: string,
+        response_to: number | null,
+        responses: Comment[]
     }
 }
 

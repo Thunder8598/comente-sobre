@@ -22,7 +22,7 @@ class Topic extends React.Component<Props> {
             <main id="topic">
                 <Navbar />
                 <FormComment permalink={this.props.match.params.permalink} getListing={this.getListing} />
-                <CommentsList permalink={this.props.match.params.permalink} setListing={this.setListing} />
+                <CommentsList permalink={this.props.match.params.permalink} getListing={this.getListing} setListing={this.setListing} />
             </main>
         );
     }

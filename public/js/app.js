@@ -5640,6 +5640,27 @@ var Listing = function () {
       }));
     };
 
+    this.findItem = function (id) {
+      var items = _this.getState().items;
+
+      return items.find(function (item) {
+        return item.id == id;
+      });
+    };
+
+    this.replaceItem = function (newItem) {
+      var items = __assign({}, _this.getState()).items;
+
+      var index = items.findIndex(function (item) {
+        return item.id == newItem.id;
+      });
+      items[index] = newItem;
+
+      _this.setState(__assign(__assign({}, _this.getState()), {
+        items: items
+      }));
+    };
+
     this.resource = resource;
     this.getState = getState;
     this.setState = setState;
@@ -6144,12 +6165,16 @@ var TopicList = function (_super) {
       _this.setState(data);
     };
 
+    _this.getListingState = function () {
+      return _this.state;
+    };
+
     _this.state = {
       items: [],
       message: null,
       next_page_url: null
     };
-    _this.listing = new Listing_1["default"]("topic", _this.state, _this.setListingState);
+    _this.listing = new Listing_1["default"]("topic", _this.getListingState, _this.setListingState);
     return _this;
   }
 
@@ -6315,6 +6340,7 @@ var Topic = function (_super) {
       getListing: this.getListing
     }), react_1["default"].createElement(CommentsList_1["default"], {
       permalink: this.props.match.params.permalink,
+      getListing: this.getListing,
       setListing: this.setListing
     }));
   };
@@ -6377,6 +6403,8 @@ var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/r
 
 var Listing_1 = __importDefault(__webpack_require__(/*! ../../../utils/Listing */ "./resources/js/utils/Listing.tsx"));
 
+var FormComment_1 = __importDefault(__webpack_require__(/*! ./FormComment */ "./resources/js/views/topic/components/FormComment.tsx"));
+
 var CommentsList = function (_super) {
   __extends(CommentsList, _super);
 
@@ -6394,7 +6422,9 @@ var CommentsList = function (_super) {
     _this.state = {
       items: [],
       message: null,
-      next_page_url: null
+      next_page_url: null,
+      anwser: null,
+      showResponses: false
     };
     _this.listing = new Listing_1["default"]("topic/".concat(props.permalink), _this.getListingState, _this.setListingState);
 
@@ -6404,11 +6434,17 @@ var CommentsList = function (_super) {
   }
 
   CommentsList.prototype.render = function () {
-    var _a = this.state,
-        items = _a.items,
-        message = _a.message,
-        next_page_url = _a.next_page_url;
-    console.log(this.state);
+    var _this = this;
+
+    var _a = this.props,
+        permalink = _a.permalink,
+        getListing = _a.getListing;
+    var _b = this.state,
+        items = _b.items,
+        message = _b.message,
+        next_page_url = _b.next_page_url,
+        anwser = _b.anwser,
+        showResponses = _b.showResponses;
     return react_1["default"].createElement("section", {
       className: "list"
     }, !items.length && message ? react_1["default"].createElement("div", {
@@ -6421,15 +6457,45 @@ var CommentsList = function (_super) {
       },
       className: "card-title"
     }, message))) : react_1["default"].createElement(react_1["default"].Fragment, null), items.map(function (_a) {
-      var email = _a.email,
-          text = _a.text;
+      var id = _a.id,
+          email = _a.email,
+          text = _a.text,
+          responses = _a.responses;
       return react_1["default"].createElement("div", {
         className: "card"
       }, react_1["default"].createElement("div", {
         className: "card-body"
       }, react_1["default"].createElement("small", null, email), react_1["default"].createElement("p", {
         className: "card-text"
-      }, text)));
+      }, text), react_1["default"].createElement("button", {
+        className: "btn btn-link",
+        onClick: function onClick() {
+          return _this.setState({
+            anwser: id
+          });
+        }
+      }, "Responder"), react_1["default"].createElement("button", {
+        className: "btn btn-link",
+        onClick: function onClick() {
+          return _this.setState({
+            showResponses: !showResponses
+          });
+        }
+      }, "Ver respostas"), showResponses ? react_1["default"].createElement("div", null, responses.map(function (_a) {
+        var email = _a.email,
+            text = _a.text;
+        return react_1["default"].createElement("div", {
+          className: "card"
+        }, react_1["default"].createElement("div", {
+          className: "card-body"
+        }, react_1["default"].createElement("small", null, email), react_1["default"].createElement("p", {
+          className: "card-text"
+        }, text)));
+      })) : react_1["default"].createElement(react_1["default"].Fragment, null)), anwser && anwser == id ? react_1["default"].createElement(FormComment_1["default"], {
+        permalink: permalink,
+        getListing: getListing,
+        responseTo: anwser
+      }) : react_1["default"].createElement(react_1["default"].Fragment, null));
     }), next_page_url ? react_1["default"].createElement("div", {
       style: {
         textAlign: "center"
@@ -6653,30 +6719,37 @@ var FormComment = function (_super) {
 
     _this.onSubmit = function (evt) {
       return __awaiter(_this, void 0, void 0, function () {
-        var formData, response, error_1;
-
-        var _a;
-
-        return __generator(this, function (_b) {
-          switch (_b.label) {
+        var listing, formData, comment, mainComment, error_1;
+        return __generator(this, function (_a) {
+          switch (_a.label) {
             case 0:
               evt.preventDefault();
+              listing = this.props.getListing();
               formData = new FormData(evt.currentTarget);
               formData.append("permalink", this.props.permalink);
-              _b.label = 1;
+              _a.label = 1;
 
             case 1:
-              _b.trys.push([1, 3,, 4]);
+              _a.trys.push([1, 3,, 4]);
 
               return [4, axios_1["default"].post("/api/comment", formData)];
 
             case 2:
-              response = _b.sent();
-              (_a = this.props.getListing()) === null || _a === void 0 ? void 0 : _a.addItem(response.data);
+              comment = _a.sent().data;
+
+              if (comment.response_to) {
+                mainComment = listing === null || listing === void 0 ? void 0 : listing.findItem(comment.response_to);
+                if (!mainComment) return [2];
+                mainComment.responses.push(comment);
+                listing === null || listing === void 0 ? void 0 : listing.replaceItem(mainComment);
+                return [2];
+              }
+
+              listing === null || listing === void 0 ? void 0 : listing.addItem(comment);
               return [3, 4];
 
             case 3:
-              error_1 = _b.sent();
+              error_1 = _a.sent();
               console.error(error_1);
               return [3, 4];
 
@@ -6691,6 +6764,7 @@ var FormComment = function (_super) {
   }
 
   FormComment.prototype.render = function () {
+    var responseTo = this.props.responseTo;
     return react_1["default"].createElement("section", {
       className: "form-comment"
     }, react_1["default"].createElement("form", {
@@ -6710,6 +6784,10 @@ var FormComment = function (_super) {
       className: "form-control",
       placeholder: "Coment\xE1rio",
       required: true
+    }), react_1["default"].createElement("input", {
+      type: "hidden",
+      name: "response_to",
+      value: responseTo
     })), react_1["default"].createElement("button", {
       type: "submit",
       className: "btn btn-primary"
